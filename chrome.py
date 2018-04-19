@@ -93,7 +93,7 @@ for website in top1m_test:
         #browse the website and quit
         driver = webdriver.Chrome(executable_path=chromedriver_path, chrome_options = chop)
         url = "http://"+website.strip()
-        proxy.new_har(url, options={'captureHeaders': True})
+        proxy.new_har(url, options={'captureHeaders': True，'captureCookies': True })
 
         driver.get(url)
         time.sleep(3)
