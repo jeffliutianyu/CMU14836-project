@@ -76,9 +76,11 @@ chop.add_argument('--proxy-server=%s' % parse_proxy)
 time.sleep(3)
 
 #files to dump out tracking data
-file1 = open("chrome_DNT.txt","w")
-file2 = open("chrome_DNT_failedsites","w")
+file1 = open("Testing Results/chrome_DNT.txt","w")
+file2 = open("Testing Results/chrome_DNT_failedsites.txt","w")
 #file2.close()
+
+har_list = []
 
 #04/18/ 00:04am - 0-999
 count = 0
@@ -95,12 +97,8 @@ for website in top1m_test:
 
         driver.get(url)
         time.sleep(3)
-        results = json.dumps(proxy.har)
+        har_list.append(proxy.har)
 
-        file1.write(results)
-        file1.flush()
-        #retrieve all the cookies
-        #retrieve_cookies_domains()
         driver.quit()
         #os.system("rm -rf " + env_path_2 + "/Results")
         time.sleep(0.5)
@@ -108,7 +106,7 @@ for website in top1m_test:
         #break
 
     except:
-        file2.write(website+"\n")
+        file2.write(website)
         file2.flush()
         driver.quit()
         time.sleep(0.5)
@@ -116,7 +114,12 @@ for website in top1m_test:
 
 #stop server and close files
 server.stop()
+
+results = json.dumps(har_list)
+file1.write(results)
+file1.flush()
 file1.close()
+
 file2.close()
 
 
